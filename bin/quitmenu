@@ -1,0 +1,32 @@
+#!/bin/sh
+
+mkopts() {
+	echo 'Quit
+Poweroff
+Reboot
+Suspend
+Lock
+'
+}
+
+if choice="`mkopts | dmenu -i`"; then
+	case "$choice" in
+		Quit)
+			pkill mybar
+			bspc quit
+			;;
+		Poweroff)
+			poweroff
+			;;
+		Reboot)
+			reboot
+			;;
+		Suspend)
+			myxlock &
+			systemctl suspend
+			;;
+		Lock)
+			myxlock
+			;;
+	esac
+fi

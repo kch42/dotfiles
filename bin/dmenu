@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/dmenu -b -nb '#333333' -nf '#cccccc' -sb '#45A5FF' -sf '#ffffff' "$@"

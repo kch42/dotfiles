@@ -1,0 +1,114 @@
+#
+# bspwm hotkeys
+#
+
+ctrl + alt + q
+	quitmenu
+
+alt + F4
+    bspc window -c
+
+shift + alt + F4
+    bspc window -k
+
+# Switch layout
+ctrl + alt + l
+    bspc desktop -l next
+
+# Balance Tree
+ctrl + alt + b
+    bspc desktop -B
+
+# Toggle Fullscreen/Floating
+ctrl + alt + {s,f}
+    bspc window -t {floating,fullscreen}
+
+# Focus last selected Window / Desktop
+#super + {grave,Tab}
+#    bspc {window,desktop} -f last
+
+# Circulate Tree
+ctrl + alt + {Prior,Next}
+	bspc desktop -C {forward,backward}
+
+# Rotate
+alt + shift + {Prior,Next}
+	bspc window -R {90,270}
+
+ctrl + alt + shift + {Prior,Next}
+	bspc desktop -R {90,270}
+
+# Swap with last selected window
+#super + apostrophe
+#    bspc window -s last
+
+ctrl + alt + t; ctrl + alt + t
+    bspc window -w last.manual
+
+ctrl + alt + t; ctrl + alt + {Left,Down,Up,Right}
+    bspc window -w {Left,Down,Up,Right}
+
+# Swap current window with biggest
+ctrl + alt + m
+    bspc window -s biggest
+
+# Select / Swap with Window in Dir
+alt + {_,shift + }{Left,Down,Up,Right}
+    bspc window -{f,s} {left,down,up,right}
+
+# Switch window (alt tab)
+alt + {_,shift + }Tab
+    bspc window -f {next,prev}
+
+# Navigate Desktops
+alt + {Prior,Next}
+    bspc desktop -f {prev,next}
+
+# Preselect splitting (CHORD)
+ctrl + alt + p; ctrl + alt + {Left,Down,Up,Right}
+    bspc window -p {left,down,up,right}
+
+# Cancel (all) preselections
+ctrl + alt + p; ctrl + alt {_, + shift}+ c
+	bspc {window -p cancel,desktop -c}
+
+#change spliting
+ctrl + alt + {Left,Down,Up,Right}
+    bspc window -e {left,down,up,right} push
+
+ctrl + alt + shift + {Left,Down,Up,Right}
+    bspc window -e {right,up,down,left} pull
+
+#super + ctrl + {1-9}
+#    bspc window -r 0.{1-9}
+
+# Change /move to desktop
+ctrl + alt + {_,shift + }{1-9,0}
+    bspc {desktop -f,window -d} ^{1-9,10}
+
+# Stuff for mouse focus, resize, ...
+~button1
+    bspc pointer -g focus
+
+alt + button{1-3}
+    bspc pointer -g {move,resize_side,resize_corner}
+
+alt + !button{1-3}
+    bspc pointer -t %i %i
+
+#
+# wm independent hotkeys
+#
+
+alt + asciicircum
+    xfce4-terminal
+
+alt + F2
+    dmenu_run
+
+# make sxhkd reload its configuration files:
+ctrl + alt + r
+    pkill -USR1 -x sxhkd
+
+ctrl + shift + Return
+	mydmenu

@@ -1,0 +1,57 @@
+#!/bin/sh
+
+rs() {
+	redshift -o -l 53.8695616:10.6875833 -t 6200:4800 "$@" >/dev/null
+}
+
+tick() {
+	while true; do
+		echo "tick"
+		sleep 30
+	done > "$REDSHIFT_FIFO"
+}
+
+daemon() {
+	test -e "$REDSHIFT_FIFO" && rm -f "$REDSHIFT_FIFO"
+	mkfifo "$REDSHIFT_FIFO"
+	
+	tick &
+	tick_pid=$!
+
+	flag=""
+	cat "$REDSHIFT_FIFO" | while read cmd; do
+		case $cmd in
+			quit)
+				kill $tick_pid &
+				break
+				;;
+			toggle)
+				if test -n "$flag"; then
+					flag=""
+				else
+					flag="-x"
+				fi
+				
+				echo "redshift $flag" > "$BAR_FIFO"
+				
+				rs $flag
+				;;
+			tick)
+				rs $flag
+				;;
+		esac
+	done
+}
+
+toggle() {
+	echo "toggle" > "$REDSHIFT_FIFO"
+}
+
+case $1 in
+daemon)
+	daemon
+	;;
+toggle)
+	toggle
+	;;
+esac
