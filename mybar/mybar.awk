@@ -10,11 +10,16 @@ BEGIN {
 	redshift=""
 	wifi=""
 	
+	isnotebook=0
+	
 	cpu_pused=0
 	cpu_ptotal=0
 }
 $1 == "date" {
 	date = $2 " " $3 " " $4
+}
+$1 == "isnotebook" {
+	isnotebook = 1
 }
 $1 == "cpu" {
 	used=$2+$3+$4+$7+$8;
@@ -135,6 +140,11 @@ $1 == "wifi" {
 	}
 }
 {
-	print "\\l" wminfo "\\c" window "\\r" wifi "  " battery "  " mem "  " cpu "  " redshift "R\\ur  " date " "
+	if(isnotebook && (length(window) > 70)) {
+		window2 = "    " window
+	} else {
+		window2 = "\\c" window
+	}
+	print "\\l" wminfo window2 "\\r" wifi "  " battery "  " mem "  " cpu "  " redshift "R\\ur  " date " "
 	fflush()
 }
