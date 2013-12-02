@@ -125,6 +125,11 @@ $1 == "wifi" {
 		if(length(tmp) > 10) {
 			tmp=substr(tmp, 1, 8) ".."
 		}
+		
+		while(length(tmp) < 10) {
+			tmp=tmp " "
+		}
+		
 		f = int(($3+5) / 10)
 		wifi = "\\u3" substr(tmp, 1, f) "\\u4" substr(tmp, 1+f, 10-f) "\\ur"
 	}
