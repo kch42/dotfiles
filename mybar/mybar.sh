@@ -56,6 +56,7 @@ update_cpu > "$BAR_FIFO" &
 if test $(hostname) = "kch42-notebook"; then
 	update_bat > "$BAR_FIFO" &
 	update_wifi > "$BAR_FIFO" &
+	echo "isnotebook" > "$BAR_FIFO" &
 fi
 
 xtitle -sf 'window %s' > "$BAR_FIFO" &

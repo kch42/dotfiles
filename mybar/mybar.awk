@@ -10,11 +10,16 @@ BEGIN {
 	redshift=""
 	wifi=""
 	
+	isnotebook=0
+	
 	cpu_pused=0
 	cpu_ptotal=0
 }
 $1 == "date" {
 	date = $2 " " $3 " " $4
+}
+$1 == "isnotebook" {
+	isnotebook = 1
 }
 $1 == "cpu" {
 	used=$2+$3+$4+$7+$8;
@@ -125,11 +130,21 @@ $1 == "wifi" {
 		if(length(tmp) > 10) {
 			tmp=substr(tmp, 1, 8) ".."
 		}
+		
+		while(length(tmp) < 10) {
+			tmp=tmp " "
+		}
+		
 		f = int(($3+5) / 10)
 		wifi = "\\u3" substr(tmp, 1, f) "\\u4" substr(tmp, 1+f, 10-f) "\\ur"
 	}
 }
 {
-	print "\\l" wminfo "\\c" window "\\r" wifi "  " battery "  " mem "  " cpu "  " redshift "R\\ur  " date " "
+	if(isnotebook && (length(window) > 70)) {
+		window2 = "    " window
+	} else {
+		window2 = "\\c" window
+	}
+	print "\\l" wminfo window2 "\\r" wifi "  " battery "  " mem "  " cpu "  " redshift "R\\ur  " date " "
 	fflush()
 }
