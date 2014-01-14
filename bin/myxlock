@@ -1,3 +1,8 @@
 #!/bin/sh
 
-xlock -mode blank
+xlock -font fixed -planfont fixed -fontset fixed -mode $(echo 'ant
+fadeplot
+maze
+rain
+space
+turtle' | shuf | sed 1q)
